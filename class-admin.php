@@ -2634,7 +2634,7 @@ class rsssl_admin extends rsssl_front_end
 	    $dismiss = __("dismiss", "really-simple-ssl");
 	    $curl_error = get_transient('rsssl_curl_error');
 
-	    if (RSSSL()->rsssl_server->uses_htaccess()) {
+	    if (RSSSL()->rsssl_server->uses_htaccess() && !is_multisite()) {
 		    $redirect_plusone = true;
 	    } else {
 	        $redirect_plusone = false;
