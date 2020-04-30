@@ -2607,7 +2607,7 @@ class rsssl_admin extends rsssl_front_end
         echo '<h2 class="nav-tab-wrapper">';
 
         foreach ($tabs as $tab => $name) {
-            $class = ($tab == $current) ? ' nav-tab-active' : '';
+            $class = ($tab == $current) ? ' rsssl-nav-tab-active' : '';
             echo "<a class='nav-tab$class' href='?page=rlrsssl_really_simple_ssl&tab=$tab'>$name</a>";
         }
         echo '</h2>';

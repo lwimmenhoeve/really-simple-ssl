@@ -1052,7 +1052,7 @@ if (!class_exists('rsssl_multisite')) {
                 echo '<h2 class="nav-tab-wrapper">';
 
                 foreach ($tabs as $tab => $name) {
-                    $class = ($tab == $current) ? ' nav-tab-active' : '';
+                    $class = ($tab == $current) ? 'rsssl-nav-tab-active' : '';
                     echo "<a class='nav-tab$class' href='?page=really-simple-ssl&tab=$tab'>$name</a>";
                 }
                 echo '</h2>';

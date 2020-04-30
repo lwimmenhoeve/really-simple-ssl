@@ -10,6 +10,10 @@
   float:left;
 }
 
+#wpbody-content > h2 > a.nav-tab.rsssl-nav-tab-active {
+  background-color: #fff !important;
+}
+
 .rsssl-sidebar img {
   max-width:100%;
   /*height:inherit;*/
