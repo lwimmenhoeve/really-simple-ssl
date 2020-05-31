@@ -3349,8 +3349,18 @@ class rsssl_admin extends rsssl_front_end
     public function enqueue_assets($hook)
     {
         global $rsssl_admin_page;
-        //prevent from loading on other pages than settings page.
-        if ((!is_network_admin() && ($hook != $rsssl_admin_page)) && $this->ssl_enabled)
+
+        //don't enqueue css if multisite and current site is a subsite
+	    if (is_multisite() && !is_network_admin() && !is_main_site(get_current_blog_id())) return;
+
+        /*
+         * load if
+         *  - is network admin, or
+         *  - this is the SSL settings page or
+         *  - SSL is not enabled yet
+         */
+
+        if ( ( !is_network_admin() && ($hook != $rsssl_admin_page) ) && $this->ssl_enabled)
             return;
 
         if (is_rtl()) {
