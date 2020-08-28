@@ -83,6 +83,7 @@ Yes. There is a dedicated network settings page where you can switch between net
 
 == Changelog ==
 = 3.3.6 =
+* Improved settings page check to include multisite network SSL page
 * Fixed links
 
 = 3.3.5 =
