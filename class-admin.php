@@ -3385,8 +3385,8 @@ class rsssl_admin extends rsssl_front_end
         /*
          * load if this is the SSL settings page
          */
-
-        if ( $hook != $rsssl_admin_page) return;
+        
+        if ( $hook != $rsssl_admin_page && !is_multisite()) return;
 
         if (is_rtl()) {
             wp_register_style('rlrsssl-css', trailingslashit(rsssl_url) . 'css/main-rtl.min.css', "", rsssl_version);
