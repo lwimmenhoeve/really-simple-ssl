@@ -3225,7 +3225,7 @@ class rsssl_admin extends rsssl_front_end
 			                    'img'         => 'complianz.jpg',
 			                    'title'       => 'Complianz',
 			                    'description' => __( "The Complianz Privacy Suite (GDPR/CaCPA) for WordPress. Simple, Quick and Complete. Up-to-date customized legal documents by a prominent IT Law firm.", "really-simple-ssl" ),
-			                    'url'         => "$admin_url" . "plugin-install.php?s=complianz+RogierLankhorst&tab=search&type=term",
+			                    'url'         => "$admin_url" . "plugin-install.php?s=complianz+really+simple+plugins&tab=search&type=term",
 			                    'pro'         => true,
 		                    )
 	                    );
@@ -3236,7 +3236,7 @@ class rsssl_admin extends rsssl_front_end
                                   'img' => 'ziprecipes.png',
                                   'title' => 'Zip Recipes',
                                   'description' => __("Create beautiful SEO friendly recipe cards for your recipes with Zip Recipes.", "really-simple-ssl"),
-                                  'url' => "$admin_url" . "plugin-install.php?s=zip+recipes+RogierLankhorst&tab=search&type=term",
+                                  'url' => "$admin_url" . "plugin-install.php?s=zip+recipes+really+simple+plugins&tab=search&type=term",
                               )
                           );
                       }
