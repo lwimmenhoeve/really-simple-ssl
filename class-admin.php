@@ -813,10 +813,8 @@ class rsssl_admin extends rsssl_front_end
 
     public function is_settings_page()
     {
-        if (!isset($_SERVER['QUERY_STRING'])) return false;
-
-        parse_str($_SERVER['QUERY_STRING'], $params);
-        if (array_key_exists("page", $params) && ($params["page"] == "rlrsssl_really_simple_ssl" || $params["page"] == 'really-simple-ssl')) {
+        // Check if the page is the setting
+        if (isset($_GET['page']) && ($_GET['page'] === 'really-simple-ssl' || $_GET['page'] === 'rlrsssl_really_simple_ssl') ) {
             return true;
         }
         return false;
@@ -3378,22 +3376,21 @@ class rsssl_admin extends rsssl_front_end
      *
      */
 
-    public function enqueue_assets($hook)
+    public function enqueue_assets()
     {
-        global $rsssl_admin_page;
-
         /*
          * load if this is the SSL settings page
          */
-        
-        if ( $hook != $rsssl_admin_page && !is_multisite()) return;
 
-        if (is_rtl()) {
-            wp_register_style('rlrsssl-css', trailingslashit(rsssl_url) . 'css/main-rtl.min.css', "", rsssl_version);
-        } else {
-	        wp_register_style('rlrsssl-css', trailingslashit(rsssl_url) . 'css/main.min.css', "", rsssl_version);
+        if (isset($_GET['page']) && ($_GET['page'] === 'really-simple-ssl' || $_GET['page'] === 'rlrsssl_really_simple_ssl') ) {
+
+            if (is_rtl()) {
+                wp_register_style('rlrsssl-css', trailingslashit(rsssl_url) . 'css/main-rtl.min.css', "", rsssl_version);
+            } else {
+                wp_register_style('rlrsssl-css', trailingslashit(rsssl_url) . 'css/main.min.css', "", rsssl_version);
+            }
+            wp_enqueue_style('rlrsssl-css');
         }
-        wp_enqueue_style('rlrsssl-css');
     }
 
     /**
