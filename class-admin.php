@@ -813,7 +813,6 @@ class rsssl_admin extends rsssl_front_end
 
     public function is_settings_page()
     {
-        // Check if the page is the setting
         if (isset($_GET['page']) && ($_GET['page'] === 'really-simple-ssl' || $_GET['page'] === 'rlrsssl_really_simple_ssl') ) {
             return true;
         }
