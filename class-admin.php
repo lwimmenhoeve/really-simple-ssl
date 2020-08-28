@@ -816,7 +816,7 @@ class rsssl_admin extends rsssl_front_end
         if (!isset($_SERVER['QUERY_STRING'])) return false;
 
         parse_str($_SERVER['QUERY_STRING'], $params);
-        if (array_key_exists("page", $params) && ($params["page"] == "rlrsssl_really_simple_ssl")) {
+        if (array_key_exists("page", $params) && ($params["page"] == "rlrsssl_really_simple_ssl" || $params["page"] == 'really-simple-ssl')) {
             return true;
         }
         return false;
@@ -3386,7 +3386,7 @@ class rsssl_admin extends rsssl_front_end
          * load if this is the SSL settings page
          */
 
-        if ( $hook != $rsssl_admin_page) return;
+        if ( $hook != $rsssl_admin_page && !is_multisite()) return;
 
         if (is_rtl()) {
             wp_register_style('rlrsssl-css', trailingslashit(rsssl_url) . 'css/main-rtl.min.css', "", rsssl_version);
