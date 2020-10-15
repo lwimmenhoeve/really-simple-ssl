@@ -777,17 +777,12 @@ if (!class_exists('rsssl_multisite')) {
             if ( $screen->parent_base === 'edit' ) return;
 
             if (isset(RSSSL()->really_simple_ssl->errors["DEACTIVATE_FILE_NOT_RENAMED"])) {
-                ?>
-                <div id="message" class="error notice is-dismissible rlrsssl-fail">
-                    <h1>
-                        <?php _e("Major security issue!", "really-simple-ssl"); ?>
-                    </h1>
-                    <p>
-                        <?php _e("The 'force-deactivate.php' file has to be renamed to .txt. Otherwise your ssl can be deactivated by anyone on the internet.", "really-simple-ssl"); ?>
-                    </p>
-                    <a href="options-general.php?page=rlrsssl_really_simple_ssl"><?php echo __("Check again", "really-simple-ssl"); ?></a>
-                </div>
-                <?php
+
+                $class = "error notice is-dismissible rlrsssl-fail";
+                $title = __("Major security issue!", "really-simple-ssl");
+                $content = __("The 'force-deactivate.php' file has to be renamed to .txt. Otherwise your ssl can be deactivated by anyone on the internet.", "really-simple-ssl");
+
+                echo $this->notice_html($class, $title, $content);
             }
 
             /*
@@ -795,26 +790,22 @@ if (!class_exists('rsssl_multisite')) {
              */
 
             if ($this->ssl_process_active()) {
-                ?>
-                <div id="message" class="error notice is-dismissible rlrsssl-fail">
-                    <p>
+                $class = "error notice is-dismissible rlrsssl-fail";
+                $title = "Website conversion";
 
-                        <?php
-                        //In some cases the rsssl_ssl_process_hook hook can fail. Therefore we offer the option to switch the hook to admin_init when the conversion is stuck.
-                        $token = wp_create_nonce('run_ssl_to_admin_init');
-                        $run_ssl_process_hook_switch_link = network_admin_url("settings.php?page=really-simple-ssl&action=ssl_conversion_hook_switch&token=" . $token);
+                //In some cases the rsssl_ssl_process_hook hook can fail. Therefore we offer the option to switch the hook to admin_init when the conversion is stuck.
+                $token = wp_create_nonce('run_ssl_to_admin_init');
+                $run_ssl_process_hook_switch_link = network_admin_url("settings.php?page=really-simple-ssl&action=ssl_conversion_hook_switch&token=" . $token);
 
-                        $link_open = '<a target="_self" href="' . $run_ssl_process_hook_switch_link . '">';
-                        $link_close = '</a>';
-                        ?>
+                $link_open = '<a target="_self" href="' . $run_ssl_process_hook_switch_link . '">';
+                $link_close = '</a>';
 
-                        <?php printf(__("Conversion of websites %s percent complete.", "really-simple-ssl"), $this->get_process_completed_percentage()); ?>
-                        <?php _e("You have just started enabling or disabling SSL on multiple websites at once, and this process is not completed yet. Please refresh this page to check if the process has finished. It will proceed in the background.", "really-simple-ssl"); ?>
-                        <?php printf(__("If the conversion does not proceed after a few minutes, click %shere%s to force the conversion process.", "really-simple-ssl"), $link_open, $link_close); ?>
+                $content = printf(__("Conversion of websites %s percent complete.", "really-simple-ssl"), $this->get_process_completed_percentage());
+                $content .= __("You have just started enabling or disabling SSL on multiple websites at once, and this process is not completed yet. Please refresh this page to check if the process has finished. It will proceed in the background.", "really-simple-ssl");
+                $content .= printf(__("If the conversion does not proceed after a few minutes, click %shere%s to force the conversion process.", "really-simple-ssl"), $link_open, $link_close);
 
-                    </p>
-                </div>
-                <?php
+                echo $this->notice_html($class, $title, $content);
+
             }
 
             /*
@@ -823,24 +814,20 @@ if (!class_exists('rsssl_multisite')) {
 
             if ($this->selected_networkwide_or_per_site && !get_site_option("rsssl_success_message_shown")) {
 
-                ?>
-                <div id="message" class="updated notice is-dismissible rlrsssl-multisite-success">
-                    <p>
-                        <?php _e("SSL activated!", "really-simple-ssl"); ?>&nbsp;
-                        <?php
-                        if ($this->ssl_enabled_networkwide)
-                            _e("SSL was activated on your entire network.", "really-simple-ssl");
-                        else
-                            _e("SSL was activated per site.", "really-simple-ssl");
-                        ?>
+                $class = "updated notice is-dismissible rlrsssl-multisite-success";
+                $title = __("SSL activated!", "really-simple-ssl");
 
-                        <?php _e("Don't forget to change your settings in Google Analytics and Webmaster tools.", "really-simple-ssl"); ?>
-                        &nbsp;
-                        <a target="_blank"
-                           href="https://really-simple-ssl.com/knowledge-base/how-to-setup-google-analytics-and-google-search-consolewebmaster-tools/"><?php _e("More info.", "really-simple-ssl"); ?></a>
-                    </p>
-                </div>
-                <?php
+                    if ($this->ssl_enabled_networkwide)
+                        $content = __("SSL was activated on your entire network.", "really-simple-ssl");
+                    else
+                        $content = __("SSL was activated per site.", "really-simple-ssl");
+
+                    $content .= __("Don't forget to change your settings in Google Analytics and Webmaster tools.", "really-simple-ssl");
+                    $content .= '<a target="_blank"
+                       href="https://really-simple-ssl.com/knowledge-base/how-to-setup-google-analytics-and-google-search-consolewebmaster-tools/"><?php _e("More info.", "really-simple-ssl"); ?></a>';
+
+                    echo $this->notice_html($class, $title, $content);
+
             }
 
             if (!$this->ssl_enabled_networkwide && $this->selected_networkwide_or_per_site && $this->is_multisite_subfolder_install()) {
@@ -870,6 +857,82 @@ if (!class_exists('rsssl_multisite')) {
                 <?php
             }
 
+        }
+
+        /**
+         * @since 4.0
+         * Return the notice HTML
+         *
+         */
+
+        public function notice_html($class, $title, $content) {
+            ob_start();
+            ?>
+            <style>
+                .rsssl-notice-header {
+                    height: 60px;
+                    border-bottom: 1px solid #dedede;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+
+                .rsssl-notice-content {
+                    margin-top: 10px;
+                    border-bottom: 1px solid #dedede;
+                }
+
+                .rsssl-notice-footer {
+                    height: 35px;
+                    display: flex;
+                    align-items: center;
+                    padding-bottom: 10px;
+                }
+
+                /*.rsssl-notice-li {*/
+                /*    display: flex;*/
+                /*    align-items: center;*/
+                /*}*/
+
+                /*.rsssl-bullet {*/
+                /*    border-radius: 50%;*/
+                /*    height: 13px;*/
+                /*    width: 13px;*/
+                /*    background-color: #FBC43D;*/
+                /*    margin-right: 10px;*/
+                /*}*/
+
+                /*.message-ul {*/
+                /*    list-style-type: none;*/
+                /*}*/
+
+                #message .message-li::before {
+                    vertical-align: middle;
+                    margin-right: 25px;
+                    color: lightgrey;
+                    content: "\f345";
+                    font: 400 21px/1 dashicons;
+                }
+            </style>
+
+            <div id="message" class="<?php echo $class?>">
+                <div class="rsssl-notice">
+                    <div class="rsssl-notice-header">
+                        <h1><?php echo $title ?></h1>
+    <!--                    <div id="rsssl-logo-activation"><img width="180px" src="--><?php //echo rsssl_url?><!--/assets/logo-really-simple-ssl.png" alt="really-simple-ssl-logo"></div>-->
+                    </div>
+                    <div class="rsssl-notice-content">
+                        <?php echo $content ?>;
+                    </div>
+                    <div class="rsssl-notice-footer">
+
+                    </div>
+                </div>
+            </div>
+            <?php
+            $content = ob_get_clean();
+            return $content;
         }
 
 
