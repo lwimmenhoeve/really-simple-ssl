@@ -810,7 +810,7 @@ if (!class_exists('rsssl_multisite')) {
                 if ($this->ssl_enabled_networkwide)
                     $content = __("SSL was activated on your entire network.", "really-simple-ssl");
                 else
-                    $content = __("SSL was activated per site.", "really-simple-ssl");
+                    $content = __("SSL was activated per site.", "really-simple-ssl") . " ";
 
                 $content .= __("Don't forget to change your settings in Google Analytics and Webmaster tools.", "really-simple-ssl") . " ";
                 $content .= '<a target="_blank"
@@ -1041,7 +1041,6 @@ if (!class_exists('rsssl_multisite')) {
             <?php
         }
 
-
         public function show_pro_option_notice()
         {
             //prevent showing the review on edit screen, as gutenberg removes the class which makes it editable.
@@ -1058,22 +1057,18 @@ if (!class_exists('rsssl_multisite')) {
 
                 if (defined('rsssl_pro_version')) {
                     if (!defined('rsssl_pro_ms_version')) {
-                        ?>
-                        <div id="message" class="updated notice is-dismissible rsssl-pro-dismiss-notice">
-                            <p>
-                                <?php echo sprintf(__('You are running Really Simple SSL pro. A dedicated add-on for multisite has been released. If you want more options to have full control over your multisite network, you can %supgrade%s on the licenses tab of your account.', 'really-simple-ssl'), '<a target="_blank" href="https://really-simple-ssl.com/account/" title="Really Simple SSL">', '</a>') ?>
-                            </p>
-                        </div>
-                        <?php
+                        $class = "updated notice is-dismissible rsssl-pro-dismiss-notice";
+                        $title = __("Dedicated multisite plugin", "really-simple-ssl");
+                        $content = sprintf(__('You are running Really Simple SSL pro. A dedicated add-on for multisite has been released. If you want more options to have full control over your multisite network, you can %supgrade%s on the licenses tab of your account.', 'really-simple-ssl'), '<a target="_blank" href="https://really-simple-ssl.com/account/" title="Really Simple SSL">', '</a>');
+
+                        echo $this->notice_html($class, $title, $content);
                     }
                 } else {
-                    ?>
-                    <div id="message" class="updated notice is-dismissible rsssl-pro-dismiss-notice">
-                        <p>
-                            <?php echo sprintf(__('If you want more options to have full control over your multisite network, you can %supgrade%s your license to a multisite license, or dismiss this message', 'really-simple-ssl'), '<a target="_blank" href="https://www.really-simple-ssl.com/pro-multisite" title="Really Simple SSL">', '</a>') ?>
-                        </p>
-                    </div>
-                    <?php
+                    $class = "updated notice is-dismissible rsssl-pro-dismiss-notice";
+                    $title = __("Get more control", "really-simple-ssl");
+                    $content = sprintf(__('If you want more options to have full control over your multisite network, you can %supgrade%s your license to a multisite license, or dismiss this message', 'really-simple-ssl'), '<a target="_blank" href="https://www.really-simple-ssl.com/pro-multisite" title="Really Simple SSL">', '</a>');
+
+                    echo $this->notice_html($class, $title, $content);
                 }
             }
         }
