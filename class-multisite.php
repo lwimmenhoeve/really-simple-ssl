@@ -324,32 +324,36 @@ if (!class_exists('rsssl_multisite')) {
                 $content = __("No SSL was detected. If you do have an SSL certificate, try to reload this page over https by clicking this link:", "really-simple-ssl") . " ";
                 $content .= '<a href="' . $current_url . '">'. __("reload over https.", "really-simple-ssl") .'</a>' . " ";
                 $content .= __("You can check your certificate on", "really-simple-ssl") . " " . '<a target="_blank" href="https://www.ssllabs.com/ssltest/">Qualys SSL Labs</a>';
+
+                $footer = '';
             }
 
             if (RSSSL()->really_simple_ssl->site_has_ssl) {
             if (is_main_site(get_current_blog_id()) && RSSSL()->really_simple_ssl->wpconfig_ok()) {
                 $class = "updated notice activate-ssl";
                 $title = __("Setup", "really-simple-ssl");
-                $content = '<h1>' . __("Some things can't be done automatically. Before you migrate, please check for: ", "really-simple-ssl") . '</h1>';
-                $content = '<ul>
-                        <li>'. __("Http references in your .css and .js files: change any http:// into //", "really-simple-ssl") .'</li>
-                        <li>'. __("Images, stylesheets or scripts from a domain without an SSL certificate: remove them or move to your own server.", "really-simple-ssl") .'</li>
+                $content = '<h2>' . __("Some things can't be done automatically. Before you migrate, please check for: ", "really-simple-ssl") . '</h2>';
+                $content .= '<ul>
+                        <li class="rsssl-notice-li">'. __("Http references in your .css and .js files: change any http:// into //", "really-simple-ssl") .'</li>
+                        <li class="rsssl-notice-li">'. __("Images, stylesheets or scripts from a domain without an SSL certificate: remove them or move to your own server.", "really-simple-ssl") .'</li>
                         </ul>';
-                $content .= $this->show_pro();
+                $content .= __('You can also let the automatic scan of the pro version handle this for you, and get premium support and increased security with HSTS included.', 'really-simple-ssl') . " "
+                . '<a target="_blank"
+                         href="https://www.really-simple-ssl.com/pro-multisite">' . __("Check out Really Simple SSL Premium", "really-simple-ssl") . '</a>' . "<br>";
 
-                    $content .= '<form action="" method="post">
-                        '. wp_nonce_field('rsssl_nonce', 'rsssl_nonce').'
-                        <input type="submit" class="button button-primary"
-                               value="'. __("Activate SSL networkwide", "really-simple-ssl").'"
-                               id="rsssl_do_activate_ssl_networkwide" name="rsssl_do_activate_ssl_networkwide">
-                        <input type="submit" class="button button-primary"
-                               value="'. __("Activate SSL per site", "really-simple-ssl").'"
-                               id="rsssl_do_activate_ssl_per_site" name="rsssl_do_activate_ssl_per_site">"
-                    </form>';
-                       $content .= '__("Networkwide activation does not check if a site has an SSL certificate. It just migrates all sites to SSL.", "really-simple-ssl")';
+                $footer = '<form action="" method="post">
+                    '. wp_nonce_field('rsssl_nonce', 'rsssl_nonce').'
+                    <input type="submit" class="button button-primary"
+                           value="'. __("Activate SSL networkwide", "really-simple-ssl").'"
+                           id="rsssl_do_activate_ssl_networkwide" name="rsssl_do_activate_ssl_networkwide">
+                    <input type="submit" class="button button-primary"
+                           value="'. __("Activate SSL per site", "really-simple-ssl").'"
+                           id="rsssl_do_activate_ssl_per_site" name="rsssl_do_activate_ssl_per_site">
+                </form>';
+                   $content .= __("Networkwide activation does not check if a site has an SSL certificate. It just migrates all sites to SSL.", "really-simple-ssl");
             }
         }
-            echo $this->notice_html($class, $title, $content);
+            echo $this->notice_html($class, $title, $content, $footer);
 
         }
 
@@ -361,7 +365,7 @@ if (!class_exists('rsssl_multisite')) {
         public function show_pro()
         {
             ?>
-            <p><?php _e('You can also let the automatic scan of the pro version handle this for you, and get premium support and increased security with HSTS included.', 'really-simple-ssl'); ?>
+            <p><?php _e('You can also let the automatic scan of the pro version handle this for you, and get premium support and increased security with HSTS included.', 'really-simple-ssl') ?>
                 &nbsp;<a target="_blank"
                          href="https://www.really-simple-ssl.com/pro-multisite"><?php _e("Check out Really Simple SSL Premium", "really-simple-ssl"); ?></a>
             </p>
@@ -786,9 +790,9 @@ if (!class_exists('rsssl_multisite')) {
                 $link_open = '<a target="_self" href="' . $run_ssl_process_hook_switch_link . '">';
                 $link_close = '</a>';
 
-                $content = printf(__("Conversion of websites %s percent complete.", "really-simple-ssl"), $this->get_process_completed_percentage());
-                $content .= __("You have just started enabling or disabling SSL on multiple websites at once, and this process is not completed yet. Please refresh this page to check if the process has finished. It will proceed in the background.", "really-simple-ssl");
-                $content .= printf(__("If the conversion does not proceed after a few minutes, click %shere%s to force the conversion process.", "really-simple-ssl"), $link_open, $link_close);
+                $content = sprintf(__("Conversion of websites %s percent complete.", "really-simple-ssl"), $this->get_process_completed_percentage()) . " ";
+                $content .= __("You have just started enabling or disabling SSL on multiple websites at once, and this process is not completed yet. Please refresh this page to check if the process has finished. It will proceed in the background.", "really-simple-ssl") . " ";
+                $content .= sprintf(__("If the conversion does not proceed after a few minutes, click %shere%s to force the conversion process.", "really-simple-ssl"), $link_open, $link_close);
 
                 echo $this->notice_html($class, $title, $content);
 
@@ -808,7 +812,7 @@ if (!class_exists('rsssl_multisite')) {
                 else
                     $content = __("SSL was activated per site.", "really-simple-ssl");
 
-                $content .= __("Don't forget to change your settings in Google Analytics and Webmaster tools.", "really-simple-ssl");
+                $content .= __("Don't forget to change your settings in Google Analytics and Webmaster tools.", "really-simple-ssl") . " ";
                 $content .= '<a target="_blank"
                    href="https://really-simple-ssl.com/knowledge-base/how-to-setup-google-analytics-and-google-search-consolewebmaster-tools/">' . __("More info.", "really-simple-ssl") . '</a>';
 
@@ -821,8 +825,8 @@ if (!class_exists('rsssl_multisite')) {
                     $class = "error notice";
                     $title = __("Warning!", "really-simple-ssl");
 
-                    $content =  __('You run a Multisite installation with subfolders, which prevents this plugin from fixing your missing server variable in the wp-config.php.', 'really-simple-ssl');
-                    $content .=  __('Because the $_SERVER["HTTPS"] variable is not set, your website may experience redirect loops.', 'really-simple-ssl');
+                    $content =  __('You run a Multisite installation with subfolders, which prevents this plugin from fixing your missing server variable in the wp-config.php.', 'really-simple-ssl') . " ";
+                    $content .=  __('Because the $_SERVER["HTTPS"] variable is not set, your website may experience redirect loops.', 'really-simple-ssl') . " ";
                     $content .= __('Activate networkwide to fix this.', 'really-simple-ssl');
 
                     echo $this->notice_html($class, $title, $content);
@@ -832,9 +836,11 @@ if (!class_exists('rsssl_multisite')) {
             if (!RSSSL()->really_simple_ssl->ssl_enabled && !$this->is_multisite_subfolder_install() && !RSSSL()->rsssl_certificate->is_wildcard() && !get_site_option("rsssl_wildcard_message_shown")) {
                 $class = "error notice is-dismissible rlrsssl-multisite-wildcard-warning";
                 $title = __("Multisite installation with subdomains", "really-simple-ssl");
-                $content = __("You run a Multisite installation with subdomains, but your site doesn't have a wildcard certificate.", 'really-simple-ssl');
-                $content .= __("This leads to issues when activating SSL networkwide since subdomains will be forced over SSL as well while they don't have a valid certificate.", 'really-simple-ssl');
+                $content = __("You run a Multisite installation with subdomains, but your site doesn't have a wildcard certificate.", 'really-simple-ssl') . " ";
+                $content .= __("This leads to issues when activating SSL networkwide since subdomains will be forced over SSL as well while they don't have a valid certificate.", 'really-simple-ssl') . " ";
                 $content .= __("Activate SSL per site or install a wildcard certificate to fix this.", 'really-simple-ssl');
+
+//                $footer = '<button class="button-rsssl-secondary rsssl-close-notice>' . __("Close", "really-simple-ssl") .'</button>"';
 
                 echo $this->notice_html($class, $title, $content);
                 }
@@ -852,7 +858,7 @@ if (!class_exists('rsssl_multisite')) {
          *
          */
 
-        public function notice_html($class, $title, $content) {
+        public function notice_html($class, $title, $content, $footer=false) {
             ob_start();
             ?>
             <style>
@@ -867,18 +873,30 @@ if (!class_exists('rsssl_multisite')) {
 
                 .rsssl-notice-content {
                     margin-top: 10px;
+                    padding-bottom: 10px;
                     min-height: 50px;
-                    border-bottom: 1px solid #dedede;
                 }
 
                 .rsssl-notice-footer {
+                    border-top: 1px solid #dedede;
                     height: 35px;
                     display: flex;
                     align-items: center;
+                    padding-top: 10px;
                     padding-bottom: 10px;
                 }
 
-                #message .message-li::before {
+                .rsssl-notice-li {
+                    display: flex;
+                    align-items: center;
+                }
+
+                ul {
+                    list-style: disc;
+                    list-style-position: inside;
+                }
+
+                #message .rsssl-notice-li::before {
                     vertical-align: middle;
                     margin-right: 25px;
                     color: lightgrey;
@@ -896,9 +914,14 @@ if (!class_exists('rsssl_multisite')) {
                     <div class="rsssl-notice-content">
                         <?php echo $content ?>
                     </div>
-                    <div class="rsssl-notice-footer">
-
-                    </div>
+                    <?php
+                    if ($footer ) { ?>
+                        <div class="rsssl-notice-footer">
+                            <?php
+                                echo $footer;
+                            ?>
+                        </div>
+                    <?php } ?>
                 </div>
             </div>
             <?php
