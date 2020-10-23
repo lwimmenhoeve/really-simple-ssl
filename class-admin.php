@@ -2614,17 +2614,15 @@ class rsssl_admin extends rsssl_front_end
                 <div class="documentation">
                     <a href="https://really-simple-ssl.com/knowledge-base" target="_blank"><?php _e("Documentation", "really-simple-ssl");?></a>
                 </div>
-                <?php if (!defined('rsssl_pro_version')) { ?>
                 <div class="header-upsell">
-                    <?php if (defined('RSSSL_PRO_VERSION')) { ?>
+                    <?php if (defined('rsssl_pro_version')) { ?>
                         <div class="header-upsell-pro"><?php _e("PRO", "really-simple-ssl"); ?></div>
                     <?php } else { ?>
                     <div class="documentation">
-                        <a href="https://really-simple-ssl.com/support" target="_blank"><?php _e("Support", "really-simple-ssl") ?></a>
+                        <a class="button button-rsssl-primary upsell" href="https://really-simple-ssl.com/support" target="_blank"><?php _e("Support", "really-simple-ssl") ?></a>
                     </div>
                     <?php } ?>
                 </div>
-                <?php } ?>
             </div>
         </div>
         <?php

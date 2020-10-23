@@ -33,7 +33,6 @@
   flex-direction: row;
   align-items: center;
   margin-right: 138px;
-  text-decoration: underline;
 }
 #wpcontent .header-links .documentation,
 .settings_page_really-simple-ssl .header-links .documentation {
@@ -47,6 +46,19 @@
 .settings_page_really-simple-ssl .header-links .header-upsell a {
   text-decoration: none;
 }
+#wpcontent .header-links .header-upsell .button-rsssl-primary,
+.settings_page_really-simple-ssl .header-links .header-upsell .button-rsssl-primary {
+  text-align: center;
+  background-color: #3a5998;
+  color: white !important;
+  min-width: 100px;
+}
+#wpcontent .header-links .header-upsell .button-rsssl-primary:hover,
+.settings_page_really-simple-ssl .header-links .header-upsell .button-rsssl-primary:hover {
+  background: #f1f1f1;
+  border-color: #016087;
+  color: black !important;
+}
 #wpcontent .header-links .header-upsell .header-upsell-pro,
 .settings_page_really-simple-ssl .header-links .header-upsell .header-upsell-pro {
   color: black;
@@ -57,6 +69,7 @@
   padding: 5px;
   border-radius: 20px;
   font-weight: 600;
+  text-decoration: none;
 }
 .rsssl-grid {
   margin-left: 25px;

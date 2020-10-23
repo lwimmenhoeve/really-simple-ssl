@@ -41,7 +41,6 @@
     flex-direction: row;
     align-items: center;
     margin-right: 138px;
-    text-decoration: underline;
     .documentation {
       padding-right: 25px;
       a {
@@ -52,6 +51,17 @@
       a {
         text-decoration: none;
       }
+      .button-rsssl-primary {
+        text-align: center;
+        background-color: #3a5998;
+        color: white !important;
+        min-width: 100px;
+        &:hover {
+          background: #f1f1f1;
+          border-color: #016087;
+          color: black !important;
+        }
+      }
       .header-upsell-pro {
         color: black;
         border: 3px solid black;
@@ -61,6 +71,7 @@
         padding: 5px;
         border-radius: 20px;
         font-weight: 600;
+        text-decoration: none;
       }
     }
   }
