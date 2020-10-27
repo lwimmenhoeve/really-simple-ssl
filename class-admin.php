@@ -2647,11 +2647,41 @@ class rsssl_admin extends rsssl_front_end
 
         echo '<h2 class="nav-tab-wrapper">';
 
+<<<<<<< Updated upstream
         foreach ($tabs as $tab => $name) {
             $class = ($tab == $current) ? ' nav-tab-active' : '';
             echo "<a class='nav-tab$class' href='?page=rlrsssl_really_simple_ssl&tab=$tab'>$name</a>";
         }
         echo '</h2>';
+=======
+        ?>
+        <div class="nav-tab-wrapper">
+            <div class="rsssl-logo-container">
+                <div id="rsssl-logo"><img src="<?php echo rsssl_url?>/assets/logo-really-simple-ssl.png" alt="review-logo"></div>
+            </div>
+            <?php
+                foreach ($tabs as $tab => $name) {
+                    $class = ($tab == $current) ? ' nav-tab-active' : '';
+                    echo "<a class='nav-tab$class' href='?page=rlrsssl_really_simple_ssl&tab=$tab'>$name</a>";
+                }
+            ?>
+            <div class="header-links">
+                <div class="documentation">
+                    <a href="https://really-simple-ssl.com/knowledge-base" target="_blank"><?php _e("Documentation", "really-simple-ssl");?></a>
+                </div>
+                <div class="header-upsell">
+                    <?php if (defined('rsssl_pro_version')) { ?>
+                        <div class="header-upsell-pro"><?php _e("PRO", "really-simple-ssl"); ?></div>
+                    <?php } else { ?>
+                    <div class="documentation">
+                        <a href="https://really-simple-ssl.com/support" class="button button-rsssl-primary" target="_blank"><?php _e("Support", "really-simple-ssl") ?></a>
+                    </div>
+                    <?php } ?>
+                </div>
+            </div>
+        </div>
+        <?php
+>>>>>>> Stashed changes
     }
 
 
