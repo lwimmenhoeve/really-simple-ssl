@@ -1,5 +1,4 @@
 <?php defined('ABSPATH') or die("you do not have access to this page!"); ?>
-
 <?php $percentage_completed = RSSSL()->really_simple_ssl->get_score_percentage(); ?>
 
 <div class="rsssl-progress-block">
@@ -33,8 +32,8 @@
             </span>
         </div>
     </div>
-
-	<div class="rsssl-task-list">
+    <?php //ss-container handles the scrollbar ?>
+	<div ss-container class="rsssl-task-list">
         <table class="rsssl-progress-table">
         <thead></thead>
 			<tbody>
